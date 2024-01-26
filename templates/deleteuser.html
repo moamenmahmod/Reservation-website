@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete user</title>
+</head>
+
+<body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .error {
+            color: red
+        }
+
+        .form-container {
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .submit-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    </head>
+
+    <body>
+        <h1>Delete User</h1>
+        <div class="form-container">
+            <form method="POST" action="/admin/user/delete">
+
+                <label for="admin">Enter userid you want to delete :</label>
+                <input type="text" name="id" class="input-field" required ><br>
+
+                <ul class="error">
+                    {% set error_messages = get_flashed_messages(category_filter=["error"]) %}
+                    {% if error_messages %}
+                    <li class="error">{{ error_messages[0] }}</li>
+                    {% endif %}
+                </ul>
+
+                <button type="submit" class="submit-button">Delete User</button>
+            </form>
+        </div>
+
+    </body>
+
+</html>

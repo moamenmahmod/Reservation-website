@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Profile</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container, .edit-profile {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .profile-email {
+            font-size: 18px;
+            color: #666666;
+            margin-bottom: 20px;
+        }
+
+        .edit-profile h2 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .edit-profile label {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .edit-profile input[type="file"],
+        .edit-profile input[type="text"],
+        .edit-profile input[type="email"],
+        .edit-profile input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .edit-profile button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-profile button:hover {
+            background-color: #0056b3;
+        }
+        
+        #form1{
+            height: 200px;
+            border-top: 1px solid #ccc;
+            margin-top: 30px;
+            padding-top: 20px;
+        }
+        #form2{
+            height: 300px;
+            border-top: 1px solid #ccc;
+            margin-top: 90px;
+            padding-top: 20px;
+        }
+        #form3{
+            height: 150px;
+            border-top: 1px solid #ccc;
+            margin-top: 30px;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-container">
+        <img src="{{ url_for('static', filename='images/' + user_data[3]) }}" alt="Profile Picture" class="profile-picture">
+        <p class="profile-name">{{ user_data[1] }}{%if 'isadmin' in session%}
+            <b style="font-size: small;">Admin</b>
+            
+            {% else %} 
+
+            <b style="font-size: small;">User</b>
+            {% endif %}
+        </p>
+        <p class="profile-email">{{ user_data[2] }}</p>
+    </div>
+
+<br><br>
+
+    <div class="edit-profile" id="form1">
+        <h2>Edit Photo</h2>
+
+        
+        <form action="/profile/{{id}}/uploadphoto" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="form_action" value="photo_upload">
+
+            <label for="photo">Upload Photo:</label>
+            <input type="file" name="photo" id="profile-picture">
+            <button type="submit">Save Changes</button>
+        </form>
+
+<div class="edit-profile" id="form2">
+    <h2>Edit Username and Email</h2>
+        <form action="/profile/{{id}}/updateusernameemail" method="POST">
+                <input type="hidden" name="form_action" value="username_email_edit">
+
+            <label for="username">Edit Username:</label>
+            <input type="text" name="username" id="username" value="{{ user_data[1] }}" required>
+    
+            <label for="email">Edit Email:</label>
+            <input type="email" name="email" id="email" value="{{ user_data[2] }}" required>
+            <button type="submit">Save Changes</button>
+        </form></div>
+
+
+<div class="edit-profile" id="form3">
+    <h2>Edit Password</h2>
+        <form action="/profile/{{id}}/updatepw" method="POST">
+                    <input type="hidden" name="form_action" value="password_edit">
+
+            <label for="password">Enter New Password:</label>
+            <input type="password" name="password" id="password" required>
+            <button type="submit">Save Changes</button>
+
+        </form>
+        <ul class="error">
+            {% for message in get_flashed_messages() %}
+            <li class="{{ message.category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        </div>
+    </div>
+
+</body>
+
+</html>

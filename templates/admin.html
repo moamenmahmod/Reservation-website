@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+</head>
+<body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <button class="button" onclick="redirectTo('/admin/user/view')">View Users</button>
+    <br>
+    <button class="button" onclick="redirectTo('/admin/user/add')">Add User</button>
+    <button class="button" onclick="redirectTo('/admin/user/edit')">Edit User</button>
+    <button class="button" onclick="redirectTo('/admin/user/delete')">Delete User</button>
+    <br><br>
+    <button class="button" onclick="redirectTo('/admin/film/add')">Add Film</button>
+    <button class="button" onclick="redirectTo('/admin/film/delete')">Delete Film</button>
+    <button class="button" onclick="redirectTo('/admin/film/addtickets')">Add Film Tickets</button>
+    <script>
+        function redirectTo(route) {
+            window.location.href = route;
+        }
+    </script>
+
+</body>
+</html>

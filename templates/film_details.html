@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ film_data[1] }} Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .film-details-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .film-info-left {
+            flex: 1;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .film-photo {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .film-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .film-genre {
+            font-size: 18px;
+            color: #666666;
+            margin-bottom: 20px;
+        }
+
+        .film-price {
+            font-size: 20px;
+            color: #ff5733;
+            margin-bottom: 10px;
+        }
+
+        .film-tickets {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .buy-tickets-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buy-tickets-button:hover {
+            background-color: #0056b3;
+        }
+
+        .comment-section {
+            flex: 1;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            margin-left: 20px; /* Add margin to separate film and comments */
+        }
+
+        .comments {
+            margin-bottom: 20px;
+        }
+
+        .comment {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            display: flex; /* Display username and text side by side */
+        }
+
+        .comment-user-photo {
+            margin-right: 10px; /* Add margin between photo and text */
+        }
+
+        .comment-user-photo img {
+            max-width: 40px;
+            max-height: 40px;
+            border-radius: 50%;
+        }
+
+        .comment-content {
+            flex: 1; /* Expand the content to take available space */
+        }
+
+        .comment-user {
+            font-weight: bold;
+        }
+
+        .comment-text {
+            margin-top: 5px;
+        }
+
+        .comment-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="film-details-container">
+        <div class="film-info-left">
+            <img class="film-photo" src="{{ url_for('static', filename='images/' + film_data[3]) }}"
+                alt="{{ film_data[1] }} Poster">
+            <h1 class="film-name">{{ film_data[1] }}</h1>
+            <p class="film-genre">Genre: {{ film_data[2] }}</p>
+            <p class="film-price">Price: $<span class="film-price">{{ film_data[4] }}</span></p>
+            <p class="film-tickets">Available Tickets: {{ film_data[5] }}</p>
+
+
+
+            <form class="ticket-form" action="/buy_tickets/{{ film_data[1] }}" method="POST">
+                <label for="ticket-quantity">Number of Tickets:</label>
+                <input type="number" name="ticket_quantity" id="ticket-quantity" min="1" required>
+                <input type="number" name="price" value="{{ film_data[4] }}" hidden>
+                {% if film_data[5] == 0 %}
+                <button class="buy-tickets-button" type="submit" style="background-color: red;" disabled>Buy Tickets
+                    (Sold
+                    Out)</button>
+                {% else %}
+                <button class="buy-tickets-button" type="submit">Buy Tickets</button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+    <div class="comment-section">
+        <h2>Comments</h2>
+        <div class="comments">
+            {% for comment in film_comments %}
+            <div class="comment">
+                <div class="comment-user-photo">
+                    <img src="{{ url_for('static', filename='images/' + comment[5]) }}"
+                        alt="{{ comment[4] }} Photo">
+                </div>
+                <div class="comment-content">
+                    <span class="comment-user">{{ comment[4] }}</span>
+                    <p class="comment-text">{{ comment[2] }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Add the comment form -->
+        <form class="comment-form" action="/add_comment/{{ film_data[1] }}" method="POST">
+            <label for="comment-text">Add a Comment:</label>
+            <textarea name="comment_text" id="comment-text" required></textarea>
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
+</body>
+
+</html>

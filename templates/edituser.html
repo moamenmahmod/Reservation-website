@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit user</title>
+</head>
+
+<body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .form-container {
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .submit-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    </head>
+
+    <body>
+        <h1>Edit User</h1>
+        <div class="form-container">
+            <form method="post" action="/admin/user/edit">
+                <label for="id">Id:</label>
+                <input type="number" id="id" name="id" class="input-field" required style="text-align: center;" min="0"><br>
+
+                <label for="username">New Username:</label>
+                <input type="text" id="username" name="username" class="input-field" required><br>
+
+                <label for="email">New Email:</label>
+                <input type="email" id="email" name="email" class="input-field" required><br>
+
+                <label for="admin">admin ?:</label>
+                <input type="text" id="username" name="admin" class="input-field" required maxlength="1"><br>
+
+                <ul class="error">
+                    {% set error_messages = get_flashed_messages(category_filter=["error"]) %}
+                    {% if error_messages %}
+                    <li class="error">{{ error_messages[0] }}</li>
+                    {% endif %}
+                </ul>
+
+                <button type="submit" class="submit-button">Edit User</button>
+            </form>
+        </div>
+
+    </body>
+
+</html>
